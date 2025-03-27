@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let minusBtn = document.getElementById("minus");
     let heartBtn = document.getElementById("like");
     let pauseBtn = document.getElementById("pause");
-    let likesList = document.getElementById("likes-list");
+    let heartList = document.getElementById("likes-list");
     let commentForm = document.getElementById("comment-form");
     let commentInput = document.getElementById("comment-input");
     let commentsList = document.getElementById("comments-list");
+    let heart = {};
 
     // Variables
     let count = 0;
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pauseBtn.addEventListener("click", () => {
         if (isPaused) {
             // Resume
-            timer = setInterval(incrementCounter, 1000);
+            timer = setInterval(increment, 0);
             pauseBtn.textContent = "Pause";
             plusBtn.disabled = false;
             minusBtn.disabled = false;
@@ -67,14 +68,36 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Heart Functions btn
     heartBtn.addEventListener("click", () => {
-        let currentCount = parseInt(counter.innerHTML);
-        if (!likes.includes(currentCount)) {
-            likes.push(currentCount);
-            let li = document.createElement("li");
-            li.innerHTML = currentCount;
-            likesList.appendChild(li);
+        let count = parseInt(counter.textContent);
+        if (heart[count]) {
+            heart(count) ++
         }
+        else{
+            heart(count) = 1
+        }
+        Likes()
+        //let currentCount = parseInt(counter.innerHTML);
+       // if (!likes.includes(currentCount)) {
+      //      likes.push(currentCount);
+       //     let li = document.createElement("li");
+      //      li.innerHTML = currentCount;
+      //      likesList.appendChild(li);
+     //   }
     });
+    
+    // Likes Function
+    
+        function Likes() {
+            heartList.innerHTML = "";
+            for (let num in heart) {
+                let li = document.createElement("li");
+                li.innerText = ` ${likes[num]}`;
+                heartList.appendChild(li);
+            }
+        }
+
+    
+
     // Comment submit form
     commentForm.addEventListener("submit", (event) => {
         event.preventDefault();
