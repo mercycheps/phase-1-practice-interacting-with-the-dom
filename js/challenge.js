@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let counter = document.getElementById("counter");
     let plusBtn = document.getElementById("plus");
     let minusBtn = document.getElementById("minus");
-    let heartBtn = document.getElementById("like");
+    let heartBtn = document.getElementById("heart");
     let pauseBtn = document.getElementById("pause");
     let heartList = document.getElementById("likes-list");
     let commentForm = document.getElementById("comment-form");
     let commentInput = document.getElementById("comment-input");
     let commentsList = document.getElementById("comments-list");
-    let heart = {};
+    let heartCount = 0;
 
     // Variables
     let count = 0;
@@ -67,22 +67,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     // Heart Functions btn
+    let numberClicked = 0;
+    let likedList = document.querySelector(".likes")
     heartBtn.addEventListener("click", () => {
+     let newParagraph = document.createElement("p");
+     likedList.appendChild(newParagraph);
+
+
         let count = parseInt(counter.textContent);
-        if (heart[count]) {
-            heart(count) ++
+        
+        if(numberClicked === count) {
+            heartCount ++;
+            newParagraph.textContent = (`you have liked ${count} ${heartCount} times`)
+
+
+        }else {
+            heartCount = 0;
+            heartCount ++;
+            numberClicked = count;
+            newParagraph.textContent = (`you have liked ${count} ${heartCount} times`)
         }
-        else{
-            heart(count) = 1
-        }
-        Likes()
-        //let currentCount = parseInt(counter.innerHTML);
-       // if (!likes.includes(currentCount)) {
-      //      likes.push(currentCount);
-       //     let li = document.createElement("li");
-      //      li.innerHTML = currentCount;
-      //      likesList.appendChild(li);
-     //   }
+        
+        
+    //     Likes()
+    //     let currentCount = parseInt(counter.innerHTML);
+    //    if (!likes.includes(currentCount)) {
+    //        likes.push(currentCount);
+    //        let li = document.createElement("li");
+    //        li.innerHTML = currentCount;
+    //        likesList.appendChild(li);
+    //    }
     });
     
     // Likes Function
@@ -101,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Comment submit form
     commentForm.addEventListener("submit", (event) => {
         event.preventDefault();
+        console.log("left a comment");
         let comment = commentInput.value;
         comments.push(comment);
         let li = document.createElement("li");
